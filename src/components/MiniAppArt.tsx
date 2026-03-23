@@ -1,11 +1,4 @@
-const GALLERY = [
-  { title: "Финал сезона 1", event: "Групповой этап", year: "2024", emoji: "🏆" },
-  { title: "Команда Neon Wolves", event: "Командное фото", year: "2024", emoji: "🐺" },
-  { title: "Лучший момент", event: "Хайлайт", year: "2024", emoji: "🎯" },
-  { title: "Церемония награждения", event: "Награждение", year: "2024", emoji: "🥇" },
-  { title: "LAN-вечер", event: "За кулисами", year: "2023", emoji: "🖥️" },
-  { title: "Clutch раунда", event: "Хайлайт", year: "2023", emoji: "💥" },
-]
+const GALLERY: { title: string; event: string; year: string; emoji: string }[] = []
 
 export function MiniAppArt() {
   return (
