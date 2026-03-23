@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 
 interface AnimatedRobotProps {
   className?: string
@@ -8,8 +8,20 @@ interface AnimatedRobotProps {
 export function AnimatedRobot({ className = "", size = "lg" }: AnimatedRobotProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const pupilRef = useRef<HTMLDivElement>(null)
+  const [blinking, setBlinking] = useState(false)
 
   const sizePx = { sm: 80, md: 128, lg: 200 }[size]
+
+  useEffect(() => {
+    const blink = () => {
+      setBlinking(true)
+      setTimeout(() => setBlinking(false), 150)
+      const next = 2000 + Math.random() * 4000
+      setTimeout(blink, next)
+    }
+    const timer = setTimeout(blink, 2000 + Math.random() * 2000)
+    return () => clearTimeout(timer)
+  }, [])
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -42,6 +54,17 @@ export function AnimatedRobot({ className = "", size = "lg" }: AnimatedRobotProp
       className={`relative ${className}`}
       style={{ width: sizePx, height: sizePx }}
     >
+      {/* Eyelid */}
+      <div
+        className="absolute inset-0 rounded-full z-10 pointer-events-none"
+        style={{
+          background: "#0A0A0F",
+          transform: blinking ? "scaleY(1)" : "scaleY(0)",
+          transformOrigin: "top",
+          transition: blinking ? "transform 0.07s ease-in" : "transform 0.08s ease-out",
+        }}
+      />
+
       {/* Outer glow ring */}
       <div
         className="absolute inset-0 rounded-full"
