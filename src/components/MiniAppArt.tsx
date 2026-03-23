@@ -1,39 +1,37 @@
-export function MiniAppArt() {
-  const artworks = [
-    { title: "Цифровые пейзажи", medium: "Генеративное искусство", year: "2024" },
-    { title: "Абстрактные композиции", medium: "p5.js", year: "2024" },
-    { title: "Интерактивные инсталляции", medium: "WebGL", year: "2023" },
-    { title: "Визуализация данных", medium: "D3.js", year: "2023" },
-    { title: "Алгоритмические паттерны", medium: "Processing", year: "2022" },
-    { title: "Нейросетевое искусство", medium: "AI Generated", year: "2022" },
-  ]
+const GALLERY = [
+  { title: "Финал сезона 1", event: "Групповой этап", year: "2024", emoji: "🏆" },
+  { title: "Команда Neon Wolves", event: "Командное фото", year: "2024", emoji: "🐺" },
+  { title: "Лучший момент", event: "Хайлайт", year: "2024", emoji: "🎯" },
+  { title: "Церемония награждения", event: "Награждение", year: "2024", emoji: "🥇" },
+  { title: "LAN-вечер", event: "За кулисами", year: "2023", emoji: "🖥️" },
+  { title: "Clutch раунда", event: "Хайлайт", year: "2023", emoji: "💥" },
+]
 
+export function MiniAppArt() {
   return (
     <div className="max-w-4xl">
-      <h2 className="text-4xl font-black mb-6 border-b-[3px] border-black pb-2">Галерея</h2>
+      <h2 className="text-4xl font-black mb-6 border-b-[3px] border-[#FF6B00] pb-4 text-white">ГАЛЕРЕЯ</h2>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {artworks.map((artwork, i) => (
+        {GALLERY.map((item, i) => (
           <div
             key={i}
-            className="bg-white border-[3px] border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] transition-all cursor-pointer"
+            className="bg-[#1A1A2E] border-[3px] border-[#FF6B00] shadow-[4px_4px_0px_0px_rgba(255,107,0,0.3)] hover:shadow-[2px_2px_0px_0px_rgba(255,107,0,0.3)] hover:translate-x-[2px] hover:translate-y-[2px] transition-all cursor-pointer"
           >
-            <div className="aspect-square bg-gradient-to-br from-[#FF2E63] to-[#FF6B9D] border-b-[3px] border-black flex items-center justify-center">
-              <span className="text-white font-black text-lg">АРТ</span>
+            <div className="aspect-square bg-gradient-to-br from-[#1A1A2E] to-[#0A0A0F] border-b-[3px] border-[#FF6B00] flex items-center justify-center">
+              <span className="text-7xl">{item.emoji}</span>
             </div>
             <div className="p-4">
-              <h3 className="text-lg font-black mb-1">{artwork.title}</h3>
-              <p className="text-sm text-gray-600 font-medium">{artwork.medium}</p>
-              <p className="text-sm font-bold">{artwork.year}</p>
+              <h3 className="text-lg font-black text-white mb-1">{item.title}</h3>
+              <p className="text-sm text-[#FF6B00] font-bold">{item.event}</p>
+              <p className="text-sm text-gray-500 font-medium">{item.year}</p>
             </div>
           </div>
         ))}
       </div>
 
       <div className="mt-8 text-center">
-        <button className="bg-[#FF2E63] text-white px-6 py-3 border-[3px] border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] transition-all font-black text-lg">
-          Полное портфолио
-        </button>
+        <p className="text-gray-500 font-medium">Фото и видео с турниров будут добавляться по мере проведения матчей</p>
       </div>
     </div>
   )

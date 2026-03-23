@@ -7,14 +7,14 @@ export default function HomePage() {
   return (
     <>
       {/* Landing Page - Fixed height, no scroll */}
-      <div className="h-screen bg-[#FAFAFA] flex flex-col items-center justify-center p-8 relative overflow-hidden">
+      <div className="h-screen bg-[#0A0A0F] flex flex-col items-center justify-center p-8 relative overflow-hidden">
         {/* Neo-brutal grid background */}
         <div
           className="absolute inset-0 opacity-[0.03]"
           style={{
             backgroundImage: `
-              linear-gradient(to right, #000 1px, transparent 1px),
-              linear-gradient(to bottom, #000 1px, transparent 1px)
+              linear-gradient(to right, #FF6B00 1px, transparent 1px),
+              linear-gradient(to bottom, #FF6B00 1px, transparent 1px)
             `,
             backgroundSize: "8px 8px",
           }}
@@ -32,7 +32,8 @@ export default function HomePage() {
           {/* AI Robot */}
           <div className="flex flex-col items-center space-y-4 mb-8">
             <AnimatedRobot />
-            <h1 className="text-4xl font-black text-center">Привет.</h1>
+            <h1 className="text-4xl font-black text-center text-white">CS2 TOURNAMENT</h1>
+            <p className="text-[#FF6B00] font-bold text-lg tracking-widest uppercase">Open Season 2025</p>
           </div>
 
           {/* Chat Panel */}

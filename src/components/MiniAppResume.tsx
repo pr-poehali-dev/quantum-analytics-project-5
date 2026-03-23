@@ -1,48 +1,94 @@
+const SCHEDULE = [
+  {
+    stage: "Групповой этап",
+    date: "15 апреля 2025",
+    time: "18:00",
+    team1: "Neon Wolves",
+    team2: "Iron Foxes",
+    map: "Mirage",
+    status: "upcoming",
+  },
+  {
+    stage: "Групповой этап",
+    date: "15 апреля 2025",
+    time: "20:00",
+    team1: "Dark Storm",
+    team2: "Free Agents",
+    map: "Inferno",
+    status: "upcoming",
+  },
+  {
+    stage: "Полуфинал",
+    date: "20 апреля 2025",
+    time: "19:00",
+    team1: "TBD",
+    team2: "TBD",
+    map: "Dust2",
+    status: "tbd",
+  },
+  {
+    stage: "Финал",
+    date: "27 апреля 2025",
+    time: "18:00",
+    team1: "TBD",
+    team2: "TBD",
+    map: "Ancient",
+    status: "tbd",
+  },
+]
+
+const STATUS_LABELS: Record<string, { label: string; color: string }> = {
+  upcoming: { label: "Скоро", color: "#FF6B00" },
+  live: { label: "LIVE", color: "#22C55E" },
+  tbd: { label: "TBD", color: "#6B7280" },
+  done: { label: "Завершён", color: "#374151" },
+}
+
 export function MiniAppResume() {
   return (
     <div className="max-w-3xl">
-      <h2 className="text-4xl font-black mb-6 border-b-[3px] border-black pb-2">Резюме</h2>
+      <h2 className="text-4xl font-black mb-6 border-b-[3px] border-[#FF6B00] pb-4 text-white">РАСПИСАНИЕ</h2>
 
-      <div className="space-y-6">
-        <div className="bg-white p-6 border-[3px] border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
-          <h3 className="text-2xl font-black mb-4">Опыт</h3>
+      <div className="space-y-4">
+        {SCHEDULE.map((match, i) => {
+          const status = STATUS_LABELS[match.status]
+          return (
+            <div
+              key={i}
+              className="bg-[#1A1A2E] p-5 border-[3px] border-[#FF6B00] shadow-[4px_4px_0px_0px_rgba(255,107,0,0.3)]"
+            >
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-[#FF6B00] font-black text-sm tracking-wider uppercase">{match.stage}</span>
+                <span
+                  className="px-3 py-1 border-[2px] font-black text-xs text-white"
+                  style={{ backgroundColor: status.color, borderColor: status.color }}
+                >
+                  {status.label}
+                </span>
+              </div>
 
-          <div className="space-y-4">
-            <div className="border-l-[4px] border-[#FF2E63] pl-4">
-              <h4 className="text-xl font-bold">Ведущий креативный разработчик</h4>
-              <p className="text-gray-600 font-medium">Stellar Analytics - 2022 - настоящее время</p>
-              <p className="mt-2">
-                Руковожу разработкой инновационных веб-продуктов на React, TypeScript и современных дизайн-системах.
-              </p>
+              <div className="flex items-center justify-between">
+                <div className="text-center flex-1">
+                  <p className="text-white font-black text-xl">{match.team1}</p>
+                </div>
+
+                <div className="text-center px-6">
+                  <p className="text-[#FF6B00] font-black text-2xl">VS</p>
+                  <p className="text-gray-400 text-xs font-bold mt-1">{match.map}</p>
+                </div>
+
+                <div className="text-center flex-1">
+                  <p className="text-white font-black text-xl">{match.team2}</p>
+                </div>
+              </div>
+
+              <div className="flex items-center justify-center gap-2 mt-3 pt-3 border-t border-gray-700">
+                <span className="text-gray-400 text-sm font-bold">{match.date}</span>
+                <span className="text-[#FF6B00] font-black">{match.time}</span>
+              </div>
             </div>
-
-            <div className="border-l-[4px] border-[#FF2E63] pl-4">
-              <h4 className="text-xl font-bold">Full Stack разработчик</h4>
-              <p className="text-gray-600 font-medium">Nova Industries - 2020 - 2022</p>
-              <p className="mt-2">
-                Создавал масштабируемые веб-приложения от концепта до деплоя, работая со всем технологическим стеком.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div className="bg-white p-6 border-[3px] border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
-          <h3 className="text-2xl font-black mb-4">Проекты</h3>
-
-          <div className="grid gap-4">
-            <div className="p-4 bg-gray-50 border-[2px] border-black">
-              <h4 className="text-lg font-bold">AI-инструмент для дизайна</h4>
-              <p className="text-sm text-gray-600 mb-2">React, Python, OpenAI API</p>
-              <p>Интеллектуальный помощник для генерации и итерации креативных концептов.</p>
-            </div>
-
-            <div className="p-4 bg-gray-50 border-[2px] border-black">
-              <h4 className="text-lg font-bold">Платформа совместной работы</h4>
-              <p className="text-sm text-gray-600 mb-2">Next.js, WebSockets, PostgreSQL</p>
-              <p>Платформа для бесшовной совместной работы распределенных команд в реальном времени.</p>
-            </div>
-          </div>
-        </div>
+          )
+        })}
       </div>
     </div>
   )
