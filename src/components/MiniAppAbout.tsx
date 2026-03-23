@@ -70,7 +70,12 @@ export function MiniAppAbout() {
               </div>
 
               <div className="flex items-center gap-3">
-                <span className="text-gray-400 text-sm font-medium hidden sm:block">{player.steam_account}</span>
+                <a
+                  href={player.steam_account.startsWith("http") ? player.steam_account : `https://${player.steam_account}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[#FF6B00] text-sm font-medium hidden sm:block hover:underline"
+                >{player.steam_account}</a>
                 <span className="text-gray-500 text-xs font-medium bg-[#0A0A0F] px-2 py-1 border border-gray-700">
                   {new Date(player.registered_at).toLocaleDateString("ru-RU")}
                 </span>
