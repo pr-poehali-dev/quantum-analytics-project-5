@@ -59,7 +59,7 @@ export function MiniAppAbout() {
           {players.map((player, i) => (
             <div
               key={player.id}
-              className=""
+              className="bg-[#1A1A2E] p-4 border-[3px] border-[#FF6B00] shadow-[4px_4px_0px_0px_rgba(255,107,0,0.3)] flex items-center justify-between hover:shadow-[2px_2px_0px_0px_rgba(255,107,0,0.3)] hover:translate-x-[2px] hover:translate-y-[2px] transition-all"
             >
               <div className="flex items-center gap-4">
                 <span className="text-[#FF6B00] font-black text-xl w-8">#{i + 1}</span>
