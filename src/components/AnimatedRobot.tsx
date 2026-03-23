@@ -1,5 +1,4 @@
 import { useEffect, useRef } from "react"
-import "./AnimatedRobot.css"
 
 interface AnimatedRobotProps {
   className?: string
@@ -7,126 +6,120 @@ interface AnimatedRobotProps {
 }
 
 export function AnimatedRobot({ className = "", size = "lg" }: AnimatedRobotProps) {
-  const robotRef = useRef<HTMLDivElement>(null)
+  const containerRef = useRef<HTMLDivElement>(null)
+  const pupilRef = useRef<HTMLDivElement>(null)
 
-  const sizeClasses = {
-    sm: "w-20 h-28",
-    md: "w-32 h-44",
-    lg: "w-40 h-56",
-  }
-
-  const handleRobotClick = () => {
-    if (!robotRef.current) return
-
-    const robot = robotRef.current
-    const mainEye = robot.querySelector(".main-eye") as HTMLElement
-    const indicators = robot.querySelectorAll(".indicator") as NodeListOf<HTMLElement>
-    const antennas = robot.querySelectorAll(".antenna") as NodeListOf<HTMLElement>
-
-    // Main eye reaction - intense glow
-    if (mainEye) {
-      mainEye.style.boxShadow = "0 0 40px rgba(255, 46, 99, 1), inset 0 2px 10px rgba(0,0,0,0.8)"
-      mainEye.style.transform = "translateX(-50%) scale(1.1)"
-      setTimeout(() => {
-        mainEye.style.boxShadow = "0 0 20px rgba(255, 46, 99, 0.3), inset 0 2px 10px rgba(0,0,0,0.8)"
-        mainEye.style.transform = "translateX(-50%) scale(1)"
-      }, 400)
-    }
-
-    // All indicators flash simultaneously
-    indicators.forEach((indicator) => {
-      indicator.style.background = "#ffffff"
-      indicator.style.boxShadow = "0 0 10px rgba(255, 255, 255, 0.8)"
-      setTimeout(() => {
-        indicator.style.background = "#FF2E63"
-        indicator.style.boxShadow = "none"
-      }, 200)
-    })
-
-    // Antennas vibrate
-    antennas.forEach((antenna, index) => {
-      const isLeft = index === 0
-      antenna.style.transform = `rotate(${isLeft ? -20 : 20}deg)`
-      setTimeout(() => {
-        antenna.style.transform = `rotate(${isLeft ? -12 : 12}deg)`
-      }, 200)
-    })
-
-    // Robot enhanced bounce
-    robot.style.transform = "translateY(-20px) rotate(2deg) scale(1.05)"
-    setTimeout(() => {
-      robot.style.transform = "translateY(0) rotate(0deg) scale(1)"
-    }, 300)
-  }
+  const sizePx = { sm: 80, md: 128, lg: 200 }[size]
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
-      if (!robotRef.current) return
+      if (!containerRef.current || !pupilRef.current) return
 
-      const robotBody = robotRef.current.querySelector(".robot-body") as HTMLElement
-      const mainEye = robotRef.current.querySelector(".main-eye") as HTMLElement
-
-      if (!robotBody || !mainEye) return
-
-      const bodyRect = robotBody.getBoundingClientRect()
-      const centerX = bodyRect.left + bodyRect.width / 2
-      const centerY = bodyRect.top + bodyRect.height / 2
+      const rect = containerRef.current.getBoundingClientRect()
+      const centerX = rect.left + rect.width / 2
+      const centerY = rect.top + rect.height / 2
 
       const angle = Math.atan2(e.clientY - centerY, e.clientX - centerX)
-      const distance = Math.min(3, Math.sqrt(Math.pow(e.clientX - centerX, 2) + Math.pow(e.clientY - centerY, 2)) / 100)
+      const maxDist = sizePx * 0.18
+      const dist = Math.min(
+        maxDist,
+        Math.sqrt(Math.pow(e.clientX - centerX, 2) + Math.pow(e.clientY - centerY, 2)) / 4
+      )
 
-      const moveX = Math.cos(angle) * distance
-      const moveY = Math.sin(angle) * distance
+      const moveX = Math.cos(angle) * dist
+      const moveY = Math.sin(angle) * dist
 
-      mainEye.style.transform = `translateX(-50%) translate(${moveX}px, ${moveY}px)`
+      pupilRef.current.style.transform = `translate(calc(-50% + ${moveX}px), calc(-50% + ${moveY}px))`
     }
 
     document.addEventListener("mousemove", handleMouseMove)
     return () => document.removeEventListener("mousemove", handleMouseMove)
-  }, [])
+  }, [sizePx])
 
   return (
-    <div className={`${sizeClasses[size]} ${className} relative`}>
-      <div ref={robotRef} className="robot" onClick={handleRobotClick}>
-        {/* Main egg-shaped body */}
-        <div className="robot-body">
-          <div className="orange-stripe"></div>
-          <div className="texture-overlay"></div>
+    <div
+      ref={containerRef}
+      className={`relative ${className}`}
+      style={{ width: sizePx, height: sizePx }}
+    >
+      {/* Outer glow ring */}
+      <div
+        className="absolute inset-0 rounded-full"
+        style={{
+          background: "radial-gradient(circle, rgba(255,46,99,0.15) 0%, transparent 70%)",
+          animation: "eye-pulse 3s ease-in-out infinite",
+        }}
+      />
 
-          {/* Antennas */}
-          <div className="antenna left"></div>
-          <div className="antenna right"></div>
+      {/* Eyeball */}
+      <div
+        className="absolute inset-0 rounded-full border-4 border-black"
+        style={{
+          background: "radial-gradient(circle at 40% 35%, #ffffff, #d0d0d0 60%, #a0a0a0)",
+          boxShadow: "0 0 30px rgba(255,46,99,0.5), 4px 4px 0px 0px rgba(0,0,0,1), inset 0 4px 20px rgba(0,0,0,0.15)",
+        }}
+      />
 
-          {/* Main eye/camera */}
-          <div className="main-eye"></div>
+      {/* Iris */}
+      <div
+        className="absolute rounded-full"
+        style={{
+          width: "52%",
+          height: "52%",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          background: "radial-gradient(circle at 40% 35%, #FF6B00, #FF2E63 50%, #6b0020)",
+          boxShadow: "0 0 15px rgba(255,46,99,0.6)",
+        }}
+      />
 
-          {/* Side sensors */}
-          <div className="side-sensor left"></div>
-          <div className="side-sensor right"></div>
+      {/* Pupil */}
+      <div
+        ref={pupilRef}
+        className="absolute rounded-full"
+        style={{
+          width: "26%",
+          height: "26%",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          background: "radial-gradient(circle at 35% 35%, #333, #000)",
+          transition: "transform 0.08s ease-out",
+          boxShadow: "0 0 8px rgba(0,0,0,0.8)",
+        }}
+      />
 
-          {/* Indicator lights */}
-          <div className="indicator top"></div>
-          <div className="indicator bottom-left"></div>
-          <div className="indicator bottom-right"></div>
-        </div>
+      {/* Glare */}
+      <div
+        className="absolute rounded-full pointer-events-none"
+        style={{
+          width: "14%",
+          height: "14%",
+          top: "22%",
+          left: "32%",
+          background: "rgba(255,255,255,0.85)",
+        }}
+      />
+      <div
+        className="absolute rounded-full pointer-events-none"
+        style={{
+          width: "7%",
+          height: "7%",
+          top: "34%",
+          left: "44%",
+          background: "rgba(255,255,255,0.5)",
+        }}
+      />
 
-        {/* Mechanical arms */}
-        <div className="arm left">
-          <div className="arm-segment">
-            <div className="arm-joint"></div>
-          </div>
-          <div className="hand"></div>
-        </div>
-        <div className="arm right">
-          <div className="arm-segment">
-            <div className="arm-joint"></div>
-          </div>
-          <div className="hand"></div>
-        </div>
-
-        {/* Body base */}
-        <div className="body-base"></div>
-      </div>
+      <style>{`
+        @keyframes eye-pulse {
+          0%, 100% { opacity: 0.6; transform: scale(1); }
+          50% { opacity: 1; transform: scale(1.08); }
+        }
+      `}</style>
     </div>
   )
 }
+
+export default AnimatedRobot
