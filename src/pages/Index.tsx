@@ -1,14 +1,85 @@
 import { useNavigate } from "react-router-dom"
+import { useEffect, useRef } from "react"
 import { AnimatedRobot } from "@/components/AnimatedRobot"
 import { ChatPanel } from "@/components/ChatPanel"
 import { Dock } from "@/components/Dock"
 import { OSOverlay } from "@/components/OSOverlay"
 import { Button } from "@/components/ui/button"
 
+function CursorTrail() {
+  const canvasRef = useRef<HTMLCanvasElement>(null)
+
+  useEffect(() => {
+    const canvas = canvasRef.current
+    if (!canvas) return
+    const ctx = canvas.getContext("2d")
+    if (!ctx) return
+
+    canvas.width = window.innerWidth
+    canvas.height = window.innerHeight
+
+    const onResize = () => {
+      canvas.width = window.innerWidth
+      canvas.height = window.innerHeight
+    }
+    window.addEventListener("resize", onResize)
+
+    const particles: { x: number; y: number; vx: number; vy: number; life: number; maxLife: number; size: number; color: string }[] = []
+    const colors = ["#FF6B00", "#FF2E63", "#ffffff", "#ffaa44"]
+
+    const onMove = (e: MouseEvent) => {
+      for (let i = 0; i < 4; i++) {
+        particles.push({
+          x: e.clientX,
+          y: e.clientY,
+          vx: (Math.random() - 0.5) * 3,
+          vy: (Math.random() - 0.5) * 3 - 1,
+          life: 1,
+          maxLife: 0.6 + Math.random() * 0.6,
+          size: 2 + Math.random() * 3,
+          color: colors[Math.floor(Math.random() * colors.length)],
+        })
+      }
+    }
+    window.addEventListener("mousemove", onMove)
+
+    let raf: number
+    const loop = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height)
+      for (let i = particles.length - 1; i >= 0; i--) {
+        const p = particles[i]
+        p.x += p.vx
+        p.y += p.vy
+        p.vy += 0.08
+        p.life -= 0.03
+        if (p.life <= 0) { particles.splice(i, 1); continue }
+        const alpha = p.life / p.maxLife
+        ctx.beginPath()
+        ctx.arc(p.x, p.y, p.size * alpha, 0, Math.PI * 2)
+        ctx.fillStyle = p.color
+        ctx.globalAlpha = alpha * 0.8
+        ctx.fill()
+      }
+      ctx.globalAlpha = 1
+      raf = requestAnimationFrame(loop)
+    }
+    loop()
+
+    return () => {
+      window.removeEventListener("mousemove", onMove)
+      window.removeEventListener("resize", onResize)
+      cancelAnimationFrame(raf)
+    }
+  }, [])
+
+  return <canvas ref={canvasRef} className="fixed inset-0 pointer-events-none z-50" />
+}
+
 export default function HomePage() {
   const navigate = useNavigate()
   return (
     <>
+      <CursorTrail />
       {/* Landing Page - Fixed height, no scroll */}
       <div className="h-screen flex flex-col items-center justify-center p-8 relative overflow-hidden" style={{ background: "#0A0A0F" }}>
         {/* Gradient wave blobs */}
