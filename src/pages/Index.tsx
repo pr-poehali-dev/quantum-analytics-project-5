@@ -35,8 +35,8 @@ export default function HomePage() {
           {/* AI Robot */}
           <div className="flex flex-col items-center space-y-4 mb-8">
             <AnimatedRobot />
-            <h1 className="text-4xl font-black text-center text-white">CS2 TOURNAMENT</h1>
-            <p className="text-[#FF6B00] font-bold text-lg tracking-widest uppercase">Open Season 2025</p>
+            <h1 className="text-4xl font-black text-center text-white">Кадетская CSка</h1>
+            <p className="text-[#FF6B00] font-bold text-lg tracking-widest uppercase">Турнир по CS2</p>
           </div>
 
           {/* Chat Panel */}

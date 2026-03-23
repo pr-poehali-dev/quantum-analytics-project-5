@@ -55,7 +55,7 @@ export function OSOverlay() {
       <header className="flex items-center justify-between p-4 border-b-[3px] border-[#FF6B00] bg-[#1A1A2E]">
         <div className="flex items-center gap-4">
           <OrbSlot size="sm" />
-          <h1 className="text-2xl font-black text-white tracking-widest">CS2 TOURNAMENT</h1>
+          <h1 className="text-2xl font-black text-white tracking-widest">Кадетская CSка</h1>
         </div>
 
         <div className="flex items-center gap-4">

@@ -62,7 +62,7 @@ export default function RegisterPage() {
         <div className="bg-[#1A1A2E] border-[3px] border-[#FF6B00] shadow-[6px_6px_0px_0px_rgba(255,107,0,0.4)] p-8">
           <div className="mb-8">
             <h1 className="text-3xl font-black text-white mb-1">РЕГИСТРАЦИЯ</h1>
-            <p className="text-[#FF6B00] font-bold tracking-wider text-sm">CS2 TOURNAMENT · OPEN SEASON 2025</p>
+            <p className="text-[#FF6B00] font-bold tracking-wider text-sm">КАДЕТСКАЯ CСЬКА · ТУРНИР ПО CS2</p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-5">

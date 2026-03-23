@@ -53,7 +53,7 @@ export default function RegisteredPage() {
             </div>
             <div className="flex justify-between items-center">
               <span className="text-gray-400 font-medium text-sm">Турнир</span>
-              <span className="text-white font-bold text-sm">Open Season 2025</span>
+              <span className="text-white font-bold text-sm">Кадетская CSка</span>
             </div>
           </div>
         </div>
