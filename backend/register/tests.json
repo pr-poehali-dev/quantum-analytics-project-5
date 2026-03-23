@@ -1,0 +1,38 @@
+{
+  "tests": [
+    {
+      "name": "GET - список игроков",
+      "method": "GET",
+      "path": "/",
+      "expectedStatus": 200,
+      "expectedBody": { "total": 1 },
+      "bodyMatcher": "partial"
+    },
+    {
+      "name": "POST - регистрация игрока",
+      "method": "POST",
+      "path": "/",
+      "body": {
+        "real_name": "Тест Игрок",
+        "nickname": "TestPlayer777",
+        "steam_account": "steam_test_777"
+      },
+      "expectedStatus": 200,
+      "expectedBody": { "nickname": "TestPlayer777" },
+      "bodyMatcher": "partial"
+    },
+    {
+      "name": "POST - дубликат ника",
+      "method": "POST",
+      "path": "/",
+      "body": {
+        "real_name": "Другой Игрок",
+        "nickname": "TestPlayer999",
+        "steam_account": "steam_other_999"
+      },
+      "expectedStatus": 409,
+      "expectedBody": { "error": "Игрок с таким ником или Steam аккаунтом уже зарегистрирован" },
+      "bodyMatcher": "partial"
+    }
+  ]
+}

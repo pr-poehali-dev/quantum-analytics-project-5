@@ -1,9 +1,12 @@
+import { useNavigate } from "react-router-dom"
 import { AnimatedRobot } from "@/components/AnimatedRobot"
 import { ChatPanel } from "@/components/ChatPanel"
 import { Dock } from "@/components/Dock"
 import { OSOverlay } from "@/components/OSOverlay"
+import { Button } from "@/components/ui/button"
 
 export default function HomePage() {
+  const navigate = useNavigate()
   return (
     <>
       {/* Landing Page - Fixed height, no scroll */}
@@ -38,6 +41,13 @@ export default function HomePage() {
 
           {/* Chat Panel */}
           <ChatPanel />
+
+          <Button
+            onClick={() => navigate("/register")}
+            className="mt-4 px-8 h-12 bg-[#FF6B00] text-black border-[3px] border-[#FF6B00] font-black text-base shadow-[4px_4px_0px_0px_rgba(255,107,0,0.4)] hover:shadow-[2px_2px_0px_0px_rgba(255,107,0,0.4)] hover:translate-x-[2px] hover:translate-y-[2px] transition-all tracking-wider"
+          >
+            ЗАРЕГИСТРИРОВАТЬСЯ
+          </Button>
         </div>
 
         <div className="relative z-10 pb-4">
