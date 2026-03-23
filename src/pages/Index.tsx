@@ -10,26 +10,73 @@ export default function HomePage() {
   return (
     <>
       {/* Landing Page - Fixed height, no scroll */}
-      <div className="h-screen bg-[#0A0A0F] flex flex-col items-center justify-center p-8 relative overflow-hidden">
-        {/* Neo-brutal grid background */}
-        <div
-          className="absolute inset-0 opacity-[0.03]"
-          style={{
-            backgroundImage: `
-              linear-gradient(to right, #FF6B00 1px, transparent 1px),
-              linear-gradient(to bottom, #FF6B00 1px, transparent 1px)
-            `,
-            backgroundSize: "8px 8px",
-          }}
-        />
+      <div className="h-screen flex flex-col items-center justify-center p-8 relative overflow-hidden" style={{ background: "#0A0A0F" }}>
+        {/* Gradient wave blobs */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div style={{
+            position: "absolute", width: "70%", height: "70%",
+            top: "-20%", left: "-15%",
+            background: "radial-gradient(ellipse, rgba(255,46,99,0.18) 0%, transparent 70%)",
+            animation: "blob1 10s ease-in-out infinite",
+            borderRadius: "50%",
+          }} />
+          <div style={{
+            position: "absolute", width: "60%", height: "60%",
+            bottom: "-15%", right: "-10%",
+            background: "radial-gradient(ellipse, rgba(255,107,0,0.15) 0%, transparent 70%)",
+            animation: "blob2 13s ease-in-out infinite",
+            borderRadius: "50%",
+          }} />
+          <div style={{
+            position: "absolute", width: "50%", height: "50%",
+            top: "30%", left: "30%",
+            background: "radial-gradient(ellipse, rgba(80,0,180,0.12) 0%, transparent 70%)",
+            animation: "blob3 16s ease-in-out infinite",
+            borderRadius: "50%",
+          }} />
+        </div>
 
-        {/* Subtle grain texture */}
-        <div
-          className="absolute inset-0 opacity-[0.02]"
-          style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
-          }}
-        />
+        {/* Sparkles */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          {[...Array(28)].map((_, i) => (
+            <div key={i} style={{
+              position: "absolute",
+              width: i % 3 === 0 ? "2px" : "1px",
+              height: i % 3 === 0 ? "2px" : "1px",
+              borderRadius: "50%",
+              background: i % 2 === 0 ? "rgba(255,107,0,0.7)" : "rgba(255,255,255,0.5)",
+              top: `${(i * 37 + 5) % 100}%`,
+              left: `${(i * 53 + 10) % 100}%`,
+              animation: `sparkle ${2 + (i % 4)}s ease-in-out ${(i * 0.4) % 3}s infinite`,
+            }} />
+          ))}
+        </div>
+
+        {/* Noise overlay */}
+        <div className="absolute inset-0 opacity-[0.025]" style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
+        }} />
+
+        <style>{`
+          @keyframes blob1 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(5%, 8%) scale(1.08); }
+            66% { transform: translate(-4%, 4%) scale(0.95); }
+          }
+          @keyframes blob2 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            40% { transform: translate(-6%, -5%) scale(1.1); }
+            70% { transform: translate(4%, -8%) scale(0.96); }
+          }
+          @keyframes blob3 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(-8%, 6%) scale(1.12); }
+          }
+          @keyframes sparkle {
+            0%, 100% { opacity: 0; transform: scale(0.5); }
+            50% { opacity: 1; transform: scale(1.5); }
+          }
+        `}</style>
 
         <div className="relative z-10 flex flex-col items-center justify-center flex-1 max-w-lg w-full">
           {/* AI Robot */}
