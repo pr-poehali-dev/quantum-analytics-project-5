@@ -1,7 +1,7 @@
 const SCHEDULE = [
   {
     stage: "Групповой этап",
-    date: "Лето 2025",
+    date: "Лето 2026",
     time: "TBD",
     team1: "TBD",
     team2: "TBD",
@@ -10,7 +10,7 @@ const SCHEDULE = [
   },
   {
     stage: "Полуфинал",
-    date: "Лето 2025",
+    date: "Лето 2026",
     time: "TBD",
     team1: "TBD",
     team2: "TBD",
@@ -19,7 +19,7 @@ const SCHEDULE = [
   },
   {
     stage: "Финал",
-    date: "Лето 2025",
+    date: "Лето 2026",
     time: "TBD",
     team1: "TBD",
     team2: "TBD",
